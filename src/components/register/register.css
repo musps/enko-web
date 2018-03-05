@@ -1,0 +1,8 @@
+.rowStyle {
+  display: flex;
+  justify-content: center;
+}
+
+.rowStyleSteps {
+  margin: 25px 0;
+}

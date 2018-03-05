@@ -1,44 +1,59 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link, Prompt } from "react-router-dom";
 
-import Register from './components/register/register';
+import 'antd/dist/antd.css';
+import './App.css';
 
-const Oui = () => {
-  <div>
-    Oui
-  </div>
-}
-const Non = () => {
-  <div>
-    Non
-  </div>
-}
+import { Layout, Menu, Breadcrumb } from 'antd';
+
+import NavBar from './components/navBar/navBar';
+import NoMatch from './components/noMatch/noMatch';
+
+import RegisterStep1 from './components/register/register-step1';
+import RegisterStep2 from './components/register/register-step2';
+import RegisterStep3 from './components/register/register-step3';
+import Login from './components/login/login';
+import Logout from './components/logout/logout';
+import AccountMe from './components/account.me/account.me';
+
+const { Content } = Layout;
+
+
 const None = () => {
-  <div>
-    None
-  </div>
-}
-
+  return (
+    <div>ok</div>
+  )
+} 
 class App extends Component {
+
+  state = {
+    user: {
+      token: null
+    }
+  }
+
+  constructor(props) {
+    super(props);
+    this.state.user.token = localStorage.getItem('user::token');
+  }
+
   render() {
     return (
       <Router>
-        <div>
-          <ul>
-            <li>
-              <Link to="/">Form</Link>
-            </li>
-            <li>
-              <Link to="/one/sercan">One</Link>
-            </li>
-            <li>
-              <Link to="/two">Two</Link>
-            </li>
-          </ul>
-          <Route path="" render={() => <h3>default</h3>} />
-          <Route path="/one/:name" component={Register} />
-          <Route path="/two" render={() => <h3>Two</h3>} />
-        </div>
+        <Layout>
+
+          <NavBar />
+          <Content style={{ padding: '0 50px' }}>
+            <Route path="/" exact component={None} />
+            <Route path="/register/step1" component={RegisterStep1} />
+            <Route path="/register/step2" component={RegisterStep2} />
+            <Route path="/register/step3" component={RegisterStep3} />
+            <Route path="/login" component={Login} />
+            <Route path="/logout" component={Logout} />
+            <Route path="/account/me" component={AccountMe} />
+          </Content>
+
+        </Layout>
       </Router>
     );
   }
